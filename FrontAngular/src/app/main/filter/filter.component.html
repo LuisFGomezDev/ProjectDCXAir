@@ -1,0 +1,73 @@
+<h2>Flight Search</h2>
+
+<!-- <form (submit)="executeSearch()" [formGroup]="form">
+
+</form> -->
+
+
+<form class="example-form">
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Origin</mat-label>
+        <input type="text" placeholder="Pick one" aria-label="Origin" matInput [formControl]="controlOrigin"
+            [matAutocomplete]="auto">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="getDestination()">
+            <mat-option *ngFor="let option of filteredOriginOptions | async" [value]="option">
+                {{option}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Destination</mat-label>
+        <input type="text" placeholder="Pick one" aria-label="Destination" matInput [formControl]="controlDestination"
+            [matAutocomplete]="autoCompleteDestination">
+        <mat-autocomplete autoActiveFirstOption #autoCompleteDestination="matAutocomplete">
+            <mat-option *ngFor="let option of filteredDestinationOptions | async" [value]="option">
+                {{option}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-radio-group aria-label="Select an option" [(ngModel)]="optionSelected">
+        <mat-radio-button value="1">OneWay</mat-radio-button>
+        <mat-radio-button value="2">RoundTrip</mat-radio-button>
+    </mat-radio-group>
+
+    <div class="example-button-row">
+        <button mat-raised-button color="primary">Search</button>
+    </div>
+</form>
+
+<div style="display: flex; justify-content: center;">
+    <div style="border: 1px solid; display: flex; justify-content: center; width: 60%;">
+        <div style="border: 1px solid; padding: 5px; margin: 5px; display: flex;">
+            <div style="display: flex;
+        flex-direction: column;
+        margin: 10px;
+        margin-right: 100px;">
+
+                <span>mzl-bog</span>
+                <span>price</span>
+            </div>
+
+            <div>
+                <div style="display: flex;
+            flex-direction: column;
+            align-items: center; border: 1px solid;">
+                    <span>mzl-bog</span>
+                    <span style="text-align: end;
+                width: 100%;">Av01</span>
+                </div>
+
+                <div style="display: flex;
+            flex-direction: column;
+            align-items: center; border: 1px solid;">
+                    <span>mzl-bog</span>
+                    <span style="text-align: end;
+                width: 100%;">Av02</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
