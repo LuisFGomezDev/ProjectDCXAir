@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Enumerations\" />
+    <Compile Remove="Enumerations\**" />
+    <EmbeddedResource Remove="Enumerations\**" />
+    <None Remove="Enumerations\**" />
   </ItemGroup>
 
 </Project>
