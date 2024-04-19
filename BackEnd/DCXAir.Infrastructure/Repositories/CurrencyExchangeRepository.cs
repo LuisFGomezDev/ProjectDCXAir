@@ -33,7 +33,7 @@ namespace DCXAir.Infrastructure.Repositories
                 return rate;
             }
 
-            string url = $"https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@2024-04-17/v1/currencies/usd.json";
+            string url = $"https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@{DateTime.Now.ToString("yyyy-MM-dd")}/v1/currencies/usd.json";
 
             try
             {
@@ -43,9 +43,9 @@ namespace DCXAir.Infrastructure.Repositories
                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
                 var currencyData = JsonSerializer.Deserialize<CurrencyData>(json, options);
 
-                if (currencyData != null && currencyData.Currencies.ContainsKey(toCurrency.ToLower()))
+                if (currencyData != null && currencyData.Rates.ContainsKey(toCurrency.ToLower()))
                 {
-                    rate = currencyData.Currencies[toCurrency.ToLower()];
+                    rate = currencyData.Rates[toCurrency.ToLower()];
                     // Guardar en caché la tasa de cambio con un tiempo de expiración de 24 horas
                     _memoryCache.Set(cacheKey, rate, TimeSpan.FromDays(1));
                     return rate;

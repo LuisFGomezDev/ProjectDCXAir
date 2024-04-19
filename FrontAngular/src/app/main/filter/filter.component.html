@@ -1,72 +1,98 @@
-<h2>Flight Search</h2>
+<div class="container">
+    <div>
 
-<!-- <form (submit)="executeSearch()" [formGroup]="form">
-
-</form> -->
-
-
-<form class="example-form">
-    <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>Origin</mat-label>
-        <input type="text" placeholder="Pick one" aria-label="Origin" matInput [formControl]="controlOrigin"
-            [matAutocomplete]="auto">
-        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="getDestination()">
-            <mat-option *ngFor="let option of filteredOriginOptions | async" [value]="option">
-                {{option}}
-            </mat-option>
-        </mat-autocomplete>
-    </mat-form-field>
-
-    <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>Destination</mat-label>
-        <input type="text" placeholder="Pick one" aria-label="Destination" matInput [formControl]="controlDestination"
-            [matAutocomplete]="autoCompleteDestination">
-        <mat-autocomplete autoActiveFirstOption #autoCompleteDestination="matAutocomplete">
-            <mat-option *ngFor="let option of filteredDestinationOptions | async" [value]="option">
-                {{option}}
-            </mat-option>
-        </mat-autocomplete>
-    </mat-form-field>
-
-    <mat-radio-group aria-label="Select an option" [(ngModel)]="optionSelected">
-        <mat-radio-button value="1">OneWay</mat-radio-button>
-        <mat-radio-button value="2">RoundTrip</mat-radio-button>
-    </mat-radio-group>
-
-    <div class="example-button-row">
-        <button mat-raised-button color="primary">Search</button>
+        <h2>Flight Search</h2>
     </div>
-</form>
+    <div>
 
-<div style="display: flex; justify-content: center;">
-    <div style="border: 1px solid; display: flex; justify-content: center; width: 60%;">
-        <div style="border: 1px solid; padding: 5px; margin: 5px; display: flex;">
-            <div style="display: flex;
-        flex-direction: column;
-        margin: 10px;
-        margin-right: 100px;">
+        <form [formGroup]="form" class="example-form">
+            <div class="container__selection">
 
-                <span>mzl-bog</span>
-                <span>price</span>
+                <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Origin</mat-label>
+                    <input type="text" placeholder="Pick one" aria-label="Origin" matInput
+                        formControlName="controlOrigin" [matAutocomplete]="auto">
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredOriginOptions | async" [value]="option">
+                            {{option}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Destination</mat-label>
+                    <input type="text" placeholder="Pick one" aria-label="Destination" matInput
+                        formControlName="controlDestination" [matAutocomplete]="autoCompleteDestination">
+                    <mat-autocomplete autoActiveFirstOption #autoCompleteDestination="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredDestinationOptions | async" [value]="option">
+                            {{option}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
             </div>
+            <div class="container__type-currency">
+                <div>
 
-            <div>
-                <div style="display: flex;
-            flex-direction: column;
-            align-items: center; border: 1px solid;">
-                    <span>mzl-bog</span>
-                    <span style="text-align: end;
-                width: 100%;">Av01</span>
+                    <mat-radio-group aria-label="Select an option" formControlName="selectedOption">
+                        <mat-radio-button value="1">OneWay</mat-radio-button>
+                        <mat-radio-button value="2">RoundTrip</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div>
+
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Currency</mat-label>
+                        <input type="text" placeholder="Pick one" aria-label="Currency" matInput
+                            formControlName="controlCurrency" [matAutocomplete]="autoCompleteCurrency">
+                        <mat-autocomplete autoActiveFirstOption #autoCompleteCurrency="matAutocomplete">
+                            <mat-option *ngFor="let option of filteredCurrencyOptions | async" [value]="option">
+                                {{option}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
                 </div>
 
-                <div style="display: flex;
-            flex-direction: column;
-            align-items: center; border: 1px solid;">
-                    <span>mzl-bog</span>
-                    <span style="text-align: end;
-                width: 100%;">Av02</span>
-                </div>
             </div>
+            <div class="container__button">
+                <button mat-raised-button color="primary" [disabled]="!form.valid"
+                    (click)="executeSearch()">Search</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div [ngSwitch]="form.controls['selectedOption'].value">
+    <div *ngSwitchCase="1">
+        <div *ngIf="form.valid && flightsdetail">
+
+            <div class="flight-style">
+                <h1>Outbound Flights</h1>
+            </div>
+
+            <app-dcxresult *ngIf="flightsdetail.length > 0" [journies]="flightsdetail"></app-dcxresult>
+            <div *ngIf="flightsdetail.length == 0"> There are no flights available for this trip </div>
+        </div>
+    </div>
+    <div *ngSwitchCase="2">
+        <div *ngIf="form.valid && roundtripdetails?.oneWayFlights">
+            <div class="flight-style">
+                <h1>Outbound Flights</h1>
+            </div>
+            <app-dcxresult [journies]="roundtripdetails?.oneWayFlights ?? []"></app-dcxresult>
+
+            <span *ngIf="(roundtripdetails?.oneWayFlights.length ?? 0)== 0"> There are no flights available for this
+                trip
+            </span>
+
+
+            <div class="flight-style">
+                <h1>Return Flights</h1>
+            </div>
+
+            <app-dcxresult [journies]="roundtripdetails?.backWayFlights ?? []"></app-dcxresult>
+            <span *ngIf="(roundtripdetails?.oneWayFlights.length ?? 0)== 0"> There are no flights available for this
+                trip
+            </span>
 
         </div>
     </div>

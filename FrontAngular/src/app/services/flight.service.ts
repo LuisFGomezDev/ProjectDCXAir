@@ -12,12 +12,19 @@ export class FlightService {
     const url = `${environment.api}/Flight/Origins`;
     return this.http.get(url);
   }
-  
-  public getDestination(originData: string) {
-    const url = `${environment.api}/Flight/Destinations/${originData}`;
+
+  public getDestination() {
+    const url = `${environment.api}/Flight/Destinations`;
     return this.http.get(url);
   }
-
+  public getOneWayFligth(origin, destination, currency) {
+    const url = `${environment.api}/Flight/OneWayFlights/${origin}/${destination}/${currency}`;
+    return this.http.get(url);
+  }
+  public getRoundTripFligth(origin, destination, currency) {
+    const url = `${environment.api}/Flight/RoundTrip/${origin}/${destination}/${currency}`;
+    return this.http.get(url);
+  }
 
   
 }

@@ -1,4 +1,5 @@
-﻿using DCXAir.Domain.Interfaces;
+﻿using DCXAir.Application.Interfaces;
+using DCXAir.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,18 +8,20 @@ using System.Threading.Tasks;
 
 namespace DCXAir.Application.Services
 {
-    public class CurrencyExchangeService
+    public class CurrencyExchangeService : ICurrencyExchangeService
     {
-        private readonly ICurrencyExchangeRepository _currencyExchangeRepository;   
+        private readonly ICurrencyExchangeRepository _currencyExchangeRepository;
 
-        public CurrencyExchangeService() { }
+        public CurrencyExchangeService(ICurrencyExchangeRepository currencyExchangeRepository)
+        {
+            _currencyExchangeRepository = currencyExchangeRepository;
+        }
 
-        public object CurrencyConvert(string toCurrency, decimal usdValue) {
-            _currencyExchangeRepository.GetConversionRateAsync(toCurrency);
+        public async Task<decimal> CurrencyConvert(string toCurrency, decimal usdValue)
+        {
+            var rate = await _currencyExchangeRepository.GetConversionRateAsync(toCurrency);
+            return usdValue * rate;
 
-            return null;
-
-            
-        } 
+        }
     }
 }

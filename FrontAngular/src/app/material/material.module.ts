@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input'
 import { MatSelectModule } from '@angular/material/select'
 import { MatAutocompleteModule } from '@angular/material/autocomplete'
 import { MatRadioModule } from '@angular/material/radio'
+import { MatCardModule } from '@angular/material/card';
 
 
 
@@ -22,8 +23,8 @@ import { MatRadioModule } from '@angular/material/radio'
     MatInputModule,
     MatSelectModule,
     MatAutocompleteModule,
-    MatRadioModule
-
+    MatRadioModule,
+    MatCardModule
   ],
   imports: [
     CommonModule

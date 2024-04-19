@@ -1,1 +1,24 @@
-<p>dcxresult works!</p>
+<div class="card">
+    <div class="container">
+        <div class="container__title">
+            <h2>DCX - Result</h2>
+        </div>
+        <div *ngFor="let journey of journies">
+            <mat-card class="container__content">
+                <div class="container__content__card">
+                    <div class="container__content__card__main-description">
+                        <span>{{journey.origin}} - {{journey.destination}}</span>
+                        <span>{{journey.price}} - {{journey.currencyName}}</span>
+                    </div>
+                    <div  class="container__content__card__main-detail">
+                        <mat-card *ngFor="let flight of journey.flights" class="container__content__card__main-detail__content">
+                            <span>{{flight.origin}}-{{flight.destination}}</span>
+                            <span
+                                class="container__content__card__main-detail__flight-number">{{flight.transport.flightCarrier}}{{flight.transport.flightNumber}}</span>
+                        </mat-card>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</div>

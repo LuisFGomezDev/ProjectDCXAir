@@ -16,7 +16,7 @@ import { FlightService } from 'src/app/services/flight.service';
 @Component({
   selector: 'app-filter',
   templateUrl: './filter.component.html',
-  styleUrls: ['./filter.component.css'],
+  styleUrls: ['./filter.component.scss'],
 })
 export class FilterComponent implements OnInit {
   constructor(
@@ -27,26 +27,29 @@ export class FilterComponent implements OnInit {
 
   form: FormGroup;
 
-  // ngOnInit(): void {
-  //   this.form = this.formBuilder.group({
-  //     source: ["", Validators.required],
-  //     destination: ["", Validators.required],
-  //     type: ["", Validators.required],
-  //     currency: ["", Validators.required]
-
-  //   });
-  // }
-
-  controlOrigin = new FormControl('');
-  controlDestination = new FormControl('');
   optionsOrigin: string[] = [];
   optionsDestination: string[] = [];
+  optionsCurrencies: string[] = ["USD", "COP", "MXN", "CAD", "EUR"];
+
   filteredOriginOptions: Observable<string[]>;
   filteredDestinationOptions: Observable<string[]>;
-  optionSelected: string;
+  filteredCurrencyOptions: Observable<string[]>;
+
+  selectedOption: string;
+  flightsdetail: any[] ;
+  roundtripdetails: any;
 
   ngOnInit() {
+    this.form = this.formBuilder.group({
+      controlOrigin: ['', Validators.required],
+      controlDestination: ['', Validators.required],
+      controlCurrency: ['', Validators.required],
+      selectedOption: ['', Validators.required],
+    });
     this.getOrigins();
+    this.getDestination();
+    this.getCurrencies();
+
   }
 
   private _filterOrigin(value: string): string[] {
@@ -55,19 +58,25 @@ export class FilterComponent implements OnInit {
       option.toLowerCase().includes(filterValue)
     );
   }
-
+ 
   private _filterDestination(value: string): string[] {
     const filterValue = value.toLowerCase();
     return this.optionsDestination.filter((option) =>
       option.toLowerCase().includes(filterValue)
     );
   }
-
+  private _filterCurrency(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.optionsCurrencies.filter((option) =>
+      option.toLowerCase().includes(filterValue)
+    );
+  }
+  
   private getOrigins() {
     this.flightservice.getOrigins().subscribe((data: any) => {
       console.log(data);
       this.optionsOrigin = data;
-      this.filteredOriginOptions = this.controlOrigin.valueChanges.pipe(
+      this.filteredOriginOptions = this.form.controls["controlOrigin"].valueChanges.pipe(
         startWith(''),
         map((value) => this._filterOrigin(value || ''))
       );
@@ -75,22 +84,46 @@ export class FilterComponent implements OnInit {
   }
 
   public getDestination() {
-    this.flightservice
-      .getDestination(this.controlOrigin.value)
-      .subscribe((dataD: any) => {
-        console.log(dataD);
-        this.optionsDestination = dataD;
-        this.filteredDestinationOptions =
-          this.controlDestination.valueChanges.pipe(
-            startWith(''),
-            map((value) => this._filterDestination(value || ''))
-          );
-      });
+    this.flightservice.getDestination().subscribe((dataD: any) => {
+      console.log(dataD);
+      this.optionsDestination = dataD;
+      this.filteredDestinationOptions =
+      this.form.controls["controlDestination"].valueChanges.pipe(
+          startWith(''),
+          map((value) => this._filterDestination(value || ''))
+        );
+    });
   }
 
-  executeSearch() {
-    this.router.navigate(['']);
+  private getCurrencies() {
+      this.filteredCurrencyOptions = this.form.controls["controlCurrency"].valueChanges .pipe(
+        startWith(''),
+        map((value) => this._filterCurrency(value || ''))
+      );
+  }
 
-    
+  
+  executeSearch() {
+    if (this.form.controls['selectedOption'].value == 1) {
+      this.flightservice
+        .getOneWayFligth(
+          this.form.controls['controlOrigin'].value,
+          this.form.controls['controlDestination'].value,
+          this.form.controls["controlCurrency"].value
+        )
+        .subscribe((data: any) => {
+          this.flightsdetail = data;
+        });
+    } else if (this.form.controls['selectedOption'].value == 2) {
+      this.flightservice
+        .getRoundTripFligth(
+          this.form.controls['controlOrigin'].value,
+          this.form.controls['controlDestination'].value,
+          this.form.controls["controlCurrency"].value
+        )
+        .subscribe((data: any) => {
+          this.roundtripdetails = data;
+        });
+    }
   }
 }

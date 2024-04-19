@@ -1,3 +1,4 @@
+using DCXAir.Application.Interfaces;
 using DCXAir.Application.Services;
 using DCXAir.Domain.Entities;
 using DCXAir.Domain.Interfaces;
@@ -15,6 +16,7 @@ builder.Services.AddMemoryCache();
 builder.Services.AddSingleton<IFlightRepository, FlightRepository>();
 builder.Services.AddSingleton<IFlightService, FlightService>();
 builder.Services.AddSingleton<ICurrencyExchangeRepository, CurrencyExchangeRepository>();
+builder.Services.AddSingleton<ICurrencyExchangeService, CurrencyExchangeService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

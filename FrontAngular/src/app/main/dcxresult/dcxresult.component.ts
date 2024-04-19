@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-dcxresult',
   templateUrl: './dcxresult.component.html',
-  styleUrls: ['./dcxresult.component.css']
+  styleUrls: ['./dcxresult.component.scss'],
 })
 export class DCXResultComponent {
+  @Input() journies: any;  
 
 }

@@ -23,14 +23,14 @@ namespace DCXAir.API.Controllers
             var response = _flightService.GetOrigins();
             return Ok(response);
         }
-        
+
         [HttpGet("Destinations")]
         public async Task<IActionResult> GetDestinations()
         {
             var response = await _flightService.GetDestinations();
             return Ok(response);
         }
-        
+
         /// <summary>
         /// Return a list of flights
         /// </summary>
@@ -38,14 +38,14 @@ namespace DCXAir.API.Controllers
         [HttpGet("OneWayFlights/{origin}/{destination}/{currency}")]
         public async Task<IActionResult> GetOneWayFligths(string origin, string destination, string currency)
         {
-            var res = await _flightService.GetOneWayFligthsAsync(origin, destination);
+            var res = await _flightService.GetOneWayFligthsAsync(origin, destination, currency);
             return Ok(res);
         }
 
         [HttpGet("RoundTrip/{origin}/{destination}/{currency}")]
         public async Task<IActionResult> GetRoundTripFligths(string origin, string destination, string currency)
         {
-            var res = await _flightService.GetRoundTripFligthsAsync(origin, destination);
+            var res = await _flightService.GetRoundTripFligthsAsync(origin, destination, currency);
             return Ok(res);
         }
 

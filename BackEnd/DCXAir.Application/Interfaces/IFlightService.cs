@@ -7,7 +7,7 @@ namespace DCXAir.Domain.Interfaces
     {
         List<string> GetOrigins();
         Task<List<string>> GetDestinations();
-        Task<List<Journey>> GetOneWayFligthsAsync(string origin, string destination);
-        Task<RoundTripDTO> GetRoundTripFligthsAsync(string origin, string destination);
+        Task<List<Journey>> GetOneWayFligthsAsync(string origin, string destinationstring, string currency);
+        Task<RoundTripDTO> GetRoundTripFligthsAsync(string origin, string destination, string currency);
     }
 }
