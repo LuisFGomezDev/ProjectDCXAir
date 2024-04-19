@@ -12,6 +12,7 @@ import { MaterialModule } from './material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FilterComponent } from './main/filter/filter.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MainlandingComponent } from './mainlanding/mainlanding.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { HttpClientModule } from '@angular/common/http';
     HeaderComponent,
     DCXResultComponent,
     FilterComponent,
+    MainlandingComponent,
   ],
   imports: [
     BrowserModule,

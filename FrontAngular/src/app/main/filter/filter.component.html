@@ -70,6 +70,7 @@
             </div>
 
             <app-dcxresult *ngIf="flightsdetail.length > 0" [journies]="flightsdetail"></app-dcxresult>
+            
             <div *ngIf="flightsdetail.length == 0"> There are no flights available for this trip </div>
         </div>
     </div>
@@ -78,6 +79,7 @@
             <div class="flight-style">
                 <h1>Outbound Flights</h1>
             </div>
+            
             <app-dcxresult [journies]="roundtripdetails?.oneWayFlights ?? []"></app-dcxresult>
 
             <span *ngIf="(roundtripdetails?.oneWayFlights.length ?? 0)== 0"> There are no flights available for this
