@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {MatRadioModule} from '@angular/material/radio';
-
+import { MatRadioModule } from '@angular/material/radio';
 
 import {
   FormGroup,
@@ -9,8 +8,7 @@ import {
   Validators,
   FormBuilder,
   FormsModule,
-  ReactiveFormsModule
-  
+  ReactiveFormsModule,
 } from '@angular/forms';
 import { Observable, map, startWith } from 'rxjs';
 import { FlightService } from 'src/app/services/flight.service';
@@ -57,7 +55,7 @@ export class FilterComponent implements OnInit {
       option.toLowerCase().includes(filterValue)
     );
   }
-  
+
   private _filterDestination(value: string): string[] {
     const filterValue = value.toLowerCase();
     return this.optionsDestination.filter((option) =>
@@ -75,19 +73,24 @@ export class FilterComponent implements OnInit {
       );
     });
   }
-  
-  getDestination() {
-    this.flightservice.getDestination(this.controlOrigin.value).subscribe((dataD: any) => {
-      console.log(dataD);
-      this.optionsDestination = dataD;
-      this.filteredDestinationOptions = this.controlDestination.valueChanges.pipe(
-        startWith(''),
-        map((value) => this._filterDestination(value || ''))
-      );
-    });
+
+  public getDestination() {
+    this.flightservice
+      .getDestination(this.controlOrigin.value)
+      .subscribe((dataD: any) => {
+        console.log(dataD);
+        this.optionsDestination = dataD;
+        this.filteredDestinationOptions =
+          this.controlDestination.valueChanges.pipe(
+            startWith(''),
+            map((value) => this._filterDestination(value || ''))
+          );
+      });
   }
 
   executeSearch() {
     this.router.navigate(['']);
+
+    
   }
 }

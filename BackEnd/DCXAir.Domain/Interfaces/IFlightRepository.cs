@@ -6,7 +6,14 @@ namespace DCXAir.Domain.Interfaces
     {
 
         List<string> GetOrigins();
-        Task<List<string>> GetDestinationsByOriginAsync(string origin);
+
         Task<List<Flight>> FindFlightsAsync(string origin, string destination);
+
+        Task<List<Flight>> FindFlightsByOrigin(string origin);
+
+        Task<List<Flight>> FindFlightsByDestination(string destination);
+
+        Task<List<string>> GetDestinations();
+
     }
 }

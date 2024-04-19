@@ -17,4 +17,7 @@ export class FlightService {
     const url = `${environment.api}/Flight/Destinations/${originData}`;
     return this.http.get(url);
   }
+
+
+  
 }

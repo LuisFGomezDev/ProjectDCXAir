@@ -8,16 +8,13 @@ using System.Text.Json;
 var builder = WebApplication.CreateBuilder(args);
 
 
-//initial flight information upload
-var jsonFilePath = "markets.json";
-var jsonData = File.ReadAllText(jsonFilePath);
-var flights = JsonSerializer.Deserialize<List<Flight>>(jsonData);
-builder.Services.AddSingleton(flights);
+builder.Services.AddMemoryCache();
 
 
 // Dependency injection
-builder.Services.AddScoped<IFlightRepository, FlightRepository>();
-builder.Services.AddScoped<IFlightService, FlightService>();
+builder.Services.AddSingleton<IFlightRepository, FlightRepository>();
+builder.Services.AddSingleton<IFlightService, FlightService>();
+builder.Services.AddSingleton<ICurrencyExchangeRepository, CurrencyExchangeRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
