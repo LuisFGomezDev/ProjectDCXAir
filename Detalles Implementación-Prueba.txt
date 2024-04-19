@@ -1,0 +1,42 @@
+Prueba Técnica FullStack 
+
+Especificaciones de Implementación de la prueba:
+
+Backend: Tecnología .NET 7 – C# - API con 4 Endpoints
+Frontend: Tecnología Angular 15.2.9 – Angular Material 15.2.9 – 
+Node: V18.20.2 – 
+Node Package Manager: npm 10.5.0
+
+
+Detalles de Implementación:
+
+El Frontend expone un formulario el cual le solicita al usuario elegir una ciudad origen, ciudad destino, tipo de vuelo (OneWay - RoundTrip) y elegir una currency para calcular el costo total de todo el trayecto de vuelo incluyendo las posibles escalas en ambas modalidades. 
+
+El Backend expone 4 endpoints los cuales pueden ser probados con SWAGGER:
+
+DCXAir.API
+
+GET/api/Flight/Origins
+
+GET/api/Flight/Destinations
+
+GET/api/Flight/OneWayFlights/{origin}/{destination}/{currency}
+
+GET/api/Flight/RoundTrip/{origin}/{destination}/{currency}
+
+-Datos almacenados: InMemoryDB
+
+-Para la conversion de monedas se utilizo una API libre la cual puede ser ubicada en la siguiente URL:
+https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@{DateTime.Now.ToString("yyyy-MM-dd")}/v1/currencies/usd.json
+
+-Se uso nomenclatura BEM - SCSS en algunos componentes del FrontEnd con Angular
+
+
+Pendientes de Implementación:
+-Implementar Test Unitarios en el Front
+
+
+Otras Consideraciones:
+- Número aproximado de horas dedicado a la prueba: 25
+
+
